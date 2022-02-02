@@ -1,44 +1,51 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "utils.h"
+#include "blinker.h"
+#include "input.h"
 
 int main(void)
 {
-    int startkod, id = 0;
-    int exit = 0;
-    struct date *d;
+    list l;
+    data dt;
 
-    printf("V%clkommen till coronablinkern.\n", 132);
+    l = createList();
+    
+    int exit = true;
 
-    while (exit == false)
+    printf("\nWelcome to the coronablinker app!\n\n");
+
+    while (exit)
     {
-        int choice = 0;
+        int choice = -1;
         displayMenu();
-        while (choice < 1 || choice > 3)
+        while (choice < 0 || choice > 4)
         {
-            printf("Val: ");
-            scanf("%d", &choice);
+            choice = readInt();
             if (choice == 1)
             {
-                printf("S%ctt in startkod: ", 132);
-                scanf("%d", &startkod);
-                printf("Startkod mottagen. S%cnder information till servern.\n", 132);
+                inputStartcode();
+                printList(l);
             }
             else if (choice == 2)
             {
-                printf("S%ctt in inmatningskod: ", 132);
-                scanf("%d", &id);
-                inputDate(d);
-                printf("Du har varit i n%crkontakt med n%cgon som %cr smittad av covid-19. Du uppmanas vara i karant%cn tillsvidare.\n", 132, 134, 132, 132);
+                dt.ID = inputIDcode();
+                dt.d = inputDate();
+                insertIntoList(&l, dt);
             }
             else if (choice == 3)
             {
-                exit = true;
+                receiveWarningMsg();
+            }
+            else if (choice == 4)
+            {
+                choice = 0;
+                exit = false;
             }
             else
             {
-                printf("V%clj ett av de givna alternativen.\n", 132);
+                printf("Choose one of the given alternatives.\n");
+                choice = 0;
             }
         }
     }
