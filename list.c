@@ -3,12 +3,6 @@
 #include <stdbool.h>
 #include "blinker.h"
 
-#ifdef DEBUGON
-#define DEBUG(msg) printf("DEBUG: %s\n", msg)
-#else 
-#define DEBUG(msg)
-#endif
-
 list createList(void) {
     return NULL;
 }
@@ -35,13 +29,11 @@ void insertIntoList(list * headptr, data dt) {
     //Insert node into list
     //Case 1: List is empty
     if (*headptr == NULL) {
-        DEBUG("List is empty\n");
         *headptr = new_node;
         new_node->next = NULL;
     }
     //Case 2: List has content
     else {
-        DEBUG("List is not empty\n");
         new_node->next = *headptr;
         *headptr = new_node;
     }
@@ -54,14 +46,28 @@ void printNode(data dt) {
 
 void printList(list l) {
     node * current_node;
-    DEBUG("print start\n");
     current_node = l;
 
     while(current_node != NULL) {
-        DEBUG("print, inside loop\n");
         //Print content of current node
         printNode(current_node->dt);
         //Go to next node
         current_node = current_node->next;
     }
 }
+
+void deleteList(list l)
+{
+   node * current_node = l;
+   node * next;
+ 
+   while (current_node != NULL)
+   {
+       next = current_node->next;
+       free(current_node);
+       current_node = next;
+   }
+   
+   l = NULL;
+}
+ 
