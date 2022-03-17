@@ -15,7 +15,7 @@ void displayMenu(void)
     printf("Choice? ");
 }
 
-void inputStartcode(void) {
+int inputStartcode(void) {
     printf("Put in startcode: ");
     int startcode = 0;
     while (startcode <= 0) {
@@ -25,6 +25,7 @@ void inputStartcode(void) {
         }
     }
     printf("\nStartcode received. Sending information to server.\n\n");
+    return startcode;
 }
 
 int inputIDcode(void) {
@@ -81,39 +82,4 @@ date inputDate(void)
 void receiveWarningMsg(void) {
     printf("\nWARNING: You've been close to somebody infected with COVID-19.\n");
     printf("Quarantine for a minimum of 2 weeks is recommended.\n\n");
-}
-
-int countLeapYears(date d)
-{
-    int years = d.year;
-
-    if (d.month <= 2)
-        years--;
- 
-    return years / 4 - years / 100 + years / 400;
-}
- 
-int getDifference(date d, struct tm tm)
-{
-    date t;
-    t.day = tm.tm_mday;
-    t.month = tm.tm_mon + 1;
-    t.year = tm.tm_year + 1900;
-
-    int monthDays[12] = { 31, 28, 31, 30, 31, 30,
-                      31, 31, 30, 31, 30, 31 };
- 
-    int n1 = d.year * 365 + d.day;
- 
-    for (int i = 0; i < d.month - 1; i++)
-        n1 += monthDays[i];
- 
-    n1 += countLeapYears(d);
- 
-    int n2 = t.year * 365 + t.day;
-    for (int i = 0; i < t.month - 1; i++)
-        n2 += monthDays[i];
-    n2 += countLeapYears(t);
- 
-    return (n2 - n1);
 }

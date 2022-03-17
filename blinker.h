@@ -16,12 +16,13 @@ typedef struct data {
 
 typedef struct node {
     data dt;
+    struct node * prev;
     struct node * next;
 } node;
 
 //Blinker functions
 void displayMenu(void);
-void inputStartcode(void);
+int inputStartcode(void);
 int inputIDcode(void);
 date inputDate(void);
 void receiveWarningMsg(void);
@@ -34,10 +35,12 @@ int getDifference(date d, struct tm tm);
 typedef node * list;
 list createList(void);
 bool isEmpty(list l);
-void insertIntoList(list * headptr, data dt);
+bool sortedInsert(list * headptr, data dt);
 void printNode(data dt);
-void printList(list l);
-void deleteList(list l);
+bool printList(list l);
+bool deleteList(list l);
+bool search(list l, int x);
+int cmpData(data x, data y);
 
 //File functions
 void writeToFile(data dt);
