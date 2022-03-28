@@ -15,8 +15,8 @@ typedef struct data {
 } data;
 
 typedef struct node {
-    data dt;
     struct node * prev;
+    data dt;
     struct node * next;
 } node;
 
@@ -38,10 +38,12 @@ bool isEmpty(list l);
 bool sortedInsert(list * headptr, data dt);
 void printNode(data dt);
 bool printList(list l);
+bool printReverse(list l);
 bool deleteList(list l);
 bool search(list l, int x);
 int cmpData(data x, data y);
 
 //File functions
-void writeToFile(data dt);
-void readFromFile(list * headptr, data dt, struct tm tm);
+void writeToFile(void);
+void appendFile(list l);
+void readFromFile(list * headptr, struct tm tm);
